@@ -32,9 +32,44 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+# Gems used only in testing
+group :test do
+	gem 'shoulda'
+	gem 'shoulda-matchers'
+	gem 'factory_girl_rails'
+	gem 'mocha'
+	gem 'cucumber-rails', :require => false
+	gem 'gherkin'
+	gem 'capybara'
+	gem 'database_cleaner'
+	gem 'launchy'
+	gem 'email_spec'
+	gem 'nokogiri'
+	gem 'simplecov'
+	gem 'tconsole'
+end
 
+# Gems used only in development
+group :development do
+  gem 'quiet_assets'
+  gem 'thin'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request'
+  gem 'wirble'
+  gem 'hirb'
+  gem 'populator3'
+  gem 'faker'
+end
+
+# Use ActiveModel has_secure_password
+gem 'bcrypt-ruby', '~> 3.1.2'
+
+gem 'will_paginate'
+gem 'validates_timeliness'
+
+gem 'omniauth'
+gem 'omniauth-facebook'
 # Use unicorn as the app server
 # gem 'unicorn'
 
