@@ -122,6 +122,7 @@ class EventTest < ActiveSupport::TestCase
   		@studying.save!
   		current_events = Event.current
   		assert current_events.include?(@bored_uc)
+  		assert current_events.include?(@studying)
   	end
   end
 end
