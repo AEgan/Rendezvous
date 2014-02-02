@@ -124,5 +124,20 @@ class EventTest < ActiveSupport::TestCase
   		assert current_events.include?(@bored_uc)
   		assert current_events.include?(@studying)
   	end
+
+  	# validations
+  	# end time before start time
+  	should "not allow end time to be before start time" do
+  		bad_dates = FactoryGirl.build(:event, creator: @alex, name: "Invalid", description: "This shouldn't be valid", start_time: Time.now+20.minutes, end_time: Time.now + 2.minutes)
+  		deny bad_dates.valid?
+  	end
+
+  	# creator not in the system
+  	should "not allow an event to be created if the user is not in the system" do
+  		no_user = FactoryGirl.build(:event, creator: nil, name: "Invalid", description: "don't work")
+  		deny no_user.valid?
+  		# don't really know how to test this with a user not in the system because the belongs_to is creator and there is no user_id...
+  	end 
+
   end
 end
