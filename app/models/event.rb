@@ -8,7 +8,8 @@ class Event < ActiveRecord::Base
 	validates_inclusion_of :active, in: [true, false], message: "Must be true or false"
 	validates_numericality_of :longitude, allow_blank: true
 	validates_numericality_of :latitude, allow_blank: true
-	validates_time :start_time, on_or_after: Time.now, on: :create, allow_blank: false
+	# the 2 seconds are for the delay that seems to be causing errors every now and again
+	validates_time :start_time, on_or_after: Time.now-2.seconds, on: :create, allow_blank: false
 	validates_time :end_time, on_or_after: :start_time, allow_blank: true
 	validate :creator_in_system
 

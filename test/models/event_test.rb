@@ -57,6 +57,39 @@ class EventTest < ActiveSupport::TestCase
 
   # limited tests for end time
   should allow_value(nil).for(:end_time)
-  should allow_value("").vor(:end_time)
+  should allow_value("").for(:end_time)
 
+  context "creating context to test events " do
+  	# set it up
+  	setup do
+	  	# need users
+	  	@alex = FactoryGirl.create(:user)
+	  	@cory = FactoryGirl.create(:user, first_name: "Cory", last_name: "Chang")
+	  	# events
+	  	@bored_uc = FactoryGirl.create(:event, creator: @cory)
+	  	@halo = FactoryGirl.create(:event, creator: @alex, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
+	  	@studying = FactoryGirl.create(:event, creator: @cory, name: "Studying", description: "Studying in Alex's Room", start_time: Time.now + 2.hours, end_time: nil)
+	  	@inactive = FactoryGirl.create(:event, creator: @alex, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: nil, active: false)
+  	end
+  	# tear it down
+  	teardown do
+  		# users
+  		@alex.destroy
+  		@cory.destroy
+  		# events
+  		@bored_uc.destroy
+  		@halo.destroy
+  		@studying.destroy
+  		@inactive.destroy
+  	end
+  	# make sure factories are working
+  	should "have working factories for testing" do
+  		assert_equal @alex.first_name, "Alex"
+  		assert_equal @cory.first_name, "Cory"
+  		assert_equal @bored_uc.name, "Bored in UC"
+  		assert_equal @halo.name, "Playing Halo"
+  		assert_equal @studying.name, "Studying"
+  		assert_equal @inactive.name, "Inactive"
+  	end
+  end
 end
