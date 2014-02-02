@@ -61,6 +61,21 @@ class UserTest < ActiveSupport::TestCase
 			assert active_users.include?(@mike)
 			deny active_users.include?(@ryan)
 		end
+
+		# methods
+		# first last
+		should "have a name method that gets the users first and last name" do
+			assert_equal "Alex Egan", @alex.name
+			assert_equal "Ryan Egan", @ryan.name
+			assert_equal "Mike Abate", @mike.name
+		end
+
+		#last first
+		should "have a method to return users name in last, first format" do
+			assert_equal "Egan, Alex", @alex.ordered_name
+			assert_equal "Egan, Ryan", @ryan.ordered_name
+			assert_equal "Abate, Mike", @mike.ordered_name
+		end
 	end
 
 end
