@@ -68,8 +68,8 @@ class EventTest < ActiveSupport::TestCase
 	  	# events
 	  	@bored_uc = FactoryGirl.create(:event, creator: @cory)
 	  	@halo = FactoryGirl.create(:event, creator: @alex, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
+	  	@inactive = FactoryGirl.create(:event, creator: @alex, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: Time.now + 7.hours, active: false)
 	  	@studying = FactoryGirl.create(:event, creator: @cory, name: "Studying", description: "Studying in Alex's Room", start_time: Time.now + 2.hours, end_time: nil)
-	  	@inactive = FactoryGirl.create(:event, creator: @alex, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: nil, active: false)
   	end
   	# tear it down
   	teardown do
@@ -90,6 +90,38 @@ class EventTest < ActiveSupport::TestCase
   		assert_equal @halo.name, "Playing Halo"
   		assert_equal @studying.name, "Studying"
   		assert_equal @inactive.name, "Inactive"
+  	end
+
+  	# scopes
+  	# for user
+  	should "have a scope that returns events for a given user" do
+  		alex_events = Event.for_user(@alex.id)
+  		cory_events = Event.for_user(@cory.id)
+  		assert_equal 2, alex_events.size
+  		assert_equal 2, cory_events.size
+  		assert alex_events.include?(@halo)
+  		assert alex_events.include?(@inactive)
+  		assert cory_events.include?(@bored_uc)
+  		assert cory_events.include?(@studying)
+  	end
+
+  	# by start date
+  	should "have a scope to return events by start date" do
+  		assert_equal ["Bored in UC", "Playing Halo", "Studying", "Inactive"], Event.by_start_time.map { |event| event.name }
+  	end
+
+  	# by end time
+  	should "have a scope to return events by end time" do
+  		assert_equal ["Studying", "Bored in UC", "Playing Halo", "Inactive"], Event.by_end_time.map { |event| event.name }
+  	end
+
+  	# current
+  	should "have a scope to return current events" do
+  		# changing the start time to check if the end date was nil
+  		@studying.update_attribute(:start_time, Time.now - 1.hour)
+  		@studying.save!
+  		current_events = Event.current
+  		assert current_events.include?(@bored_uc)
   	end
   end
 end

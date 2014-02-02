@@ -16,9 +16,9 @@ class Event < ActiveRecord::Base
 	# scopes
 	# can add more later
 	scope :for_user, ->(uid) { where('user_id = ?', uid)  }
-	scope :by_start_time, -> { order('start_time DESC') }
-	scope :by_end_time, -> { order('end_time DESC') }
-	scope :current, -> { where('start_time <= ? AND ? <= end_time', Time.now, Time.now) }
+	scope :by_start_time, -> { order('start_time ASC') }
+	scope :by_end_time, -> { order('end_time ASC') }
+	scope :current, -> { where('start_time <= ? AND (end_time IS NULL OR ? <= end_time )', Time.now, Time.now) }
 
 	# methods
 	private
