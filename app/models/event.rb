@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-	belongs_to :creater, class_name: "User", foreign_key: "user_id"
+	belongs_to :creator, class_name: "User", foreign_key: "user_id"
 
 	# validations
 	validates_numericality_of :user_id, only_integer: true, greater_than: 0, allow_blank: false
@@ -8,8 +8,9 @@ class Event < ActiveRecord::Base
 	validates_inclusion_of :active, in: [true, false], message: "Must be true or false"
 	validates_numericality_of :longitude, allow_blank: true
 	validates_numericality_of :latitude, allow_blank: true
-	validates_time :start_time
-	validates_time :end_time, on_or_after: :start_time
+	validates_time :start_time, on_or_after: Time.now, on: :create, allow_blank: false
+	validates_time :end_time, on_or_after: :start_time, allow_blank: true
+	validate :creator_in_system
 
 	# scopes
 	# can add more later
@@ -18,4 +19,15 @@ class Event < ActiveRecord::Base
 	scope :by_end_time, -> { order('end_time DESC') }
 	scope :current, -> { where('start_time <= ? AND ? <= end_time', Time.now, Time.now) }
 
+	# methods
+	private
+	# make sure the creater is actually in the system
+	def creator_in_system
+		creator_ids = User.all.map { |user| user.id }
+		unless creator_ids.include?(self.user_id)
+			errors.add(:creator, 'is not active in the system')
+			return false
+		end
+		true
+	end
 end
