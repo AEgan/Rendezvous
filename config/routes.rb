@@ -3,7 +3,7 @@ FuzzyOctoAdventure::Application.routes.draw do
 
   resources :events
 
-  get "home/index"
+  get "home/index", as: :home
   get "sessions/create"
   get "sessions/destroy"
   resources :users
