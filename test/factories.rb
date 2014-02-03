@@ -21,4 +21,11 @@ FactoryGirl.define do
 		latitude 40.444513
 		longitude -79.94234
 	end
+
+	# attendance factory
+	factory :attendance do
+		association :user
+		association :event
+		confirmed false
+	end
 end

@@ -8,7 +8,7 @@ class Attendance < ActiveRecord::Base
 	validates_numericality_of :event_id, only_integer: true, allow_blank: false
 	validates_inclusion_of :confirmed, in: [true, false]
 	validate :user_in_system
-	validate :event_active_in_system
+	validate :event_active_in_system, on: :create
 
 	# scopes
 	scope :for_user, ->(uid) { where('user_id = ?', uid) }
