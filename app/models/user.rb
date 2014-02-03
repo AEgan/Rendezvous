@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 	# relationships
 	has_many :events
+	has_many :attendances
+	has_many :events, through: :attendances
 	
 	# validations
 	validates_presence_of :provider, :uid, :first_name, :last_name, :oauth_token, :oauth_expires_at

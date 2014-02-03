@@ -1,4 +1,6 @@
 FuzzyOctoAdventure::Application.routes.draw do
+  resources :attendances
+
   resources :events
 
   get "home/index"
