@@ -4,6 +4,8 @@ class EventTest < ActiveSupport::TestCase
 	# shouldas
 	#relationships
   should belong_to(:creator).class_name('User').with_foreign_key('user_id')
+  should have_many(:attendances)
+  should have_many(:users).through(:attendances)
 
   # validations
   should validate_presence_of(:name)

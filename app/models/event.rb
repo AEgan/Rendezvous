@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
 	belongs_to :creator, class_name: "User", foreign_key: "user_id"
-	has_many :attendences
-	has_many :users, through: :attendences
+	has_many :attendances
+	has_many :users, through: :attendances
 
 	# validations
 	validates_numericality_of :user_id, only_integer: true, greater_than: 0, allow_blank: false

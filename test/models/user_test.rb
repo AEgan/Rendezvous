@@ -2,7 +2,9 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 	# relationships
-	should have_many(:events)
+	should have_many(:created_events).class_name('Event')
+	should have_many(:attendances)
+	should have_many(:events).through(:attendances)
 
 	# validations
 	should validate_presence_of(:first_name)
