@@ -115,5 +115,15 @@ class AttendanceTest < ActiveSupport::TestCase
 			deny   unconfirmed_attendances.include?(@dave_uc)
 			assert unconfirmed_attendances.include?(@dave_halo)
 		end
+
+		# validations
+		# user not in system would be caught with the shouldas above
+		# event not active
+		should "not allow an attendance to be created if the event is not active in the system" do
+			inactive_event = FactoryGirl.create(:event, creator: @cory, name: 'Inactive', description: 'Pls do not work', active: false)
+			bad_attendance = FactoryGirl.build(:attendance, user: @dave, event: inactive_event)
+			deny bad_attendance.valid?
+			inactive_event.destroy
+		end
 	end
 end
