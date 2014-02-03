@@ -127,6 +127,21 @@ class EventTest < ActiveSupport::TestCase
   		assert current_events.include?(@studying)
   	end
 
+  	# active
+  	should "have a scope to return active events" do
+  		active_events = Event.active
+  		assert_equal 3, active_events.size
+  		assert active_events.include?(@halo)
+  		assert active_events.include?(@bored_uc)
+  		assert active_events.include?(@studying)
+  		deny active_events.include?(@inactive)
+  	end
+
+  	# inactive
+  	should "have a scope to return inactive events" do
+  		assert_equal [@inactive], Event.inactive
+  	end
+
   	# validations
   	# end time before start time
   	should "not allow end time to be before start time" do

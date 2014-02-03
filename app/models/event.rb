@@ -21,6 +21,8 @@ class Event < ActiveRecord::Base
 	scope :by_start_time, -> { order('start_time ASC') }
 	scope :by_end_time, -> { order('end_time ASC') }
 	scope :current, -> { where('start_time <= ? AND (end_time IS NULL OR ? <= end_time )', Time.now, Time.now) }
+	scope :active, -> { where(active: true) }
+	scope :inactive, -> { where(active: false) }
 
 	# methods
 	private
