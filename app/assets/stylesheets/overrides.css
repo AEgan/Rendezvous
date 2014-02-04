@@ -45,3 +45,11 @@ a.facebook {
 	margin-top: -5px;
 	float: right;
 }
+
+#footer {
+	text-align: center;
+}
+
+#footer > p {
+	font-weight: normal;
+}
