@@ -1,0 +1,47 @@
+a:hover {
+	text-decoration: none;
+	background-color: transparent;
+}
+
+#custNav {
+	width: 100%;
+}
+#custNav > ul {
+	margin-top: 0px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #4231D0;
+	content: " ";
+	padding-left: 1%;
+}
+
+#custNav > ul > li {
+	color: #FFFFFF;
+	display: inline;
+	font-size: x-large;
+	margin-right: 12px;
+}
+
+#custNav > ul > li > a {
+	font-size: medium;
+	text-decoration: none;
+	color: #EEEEEE;
+}
+
+#custNav > ul > li > a.brand {
+	color: #FFFFFF;
+	display: inline;
+	font-size: x-large;
+	margin-right: 12px;
+}
+
+#custNav > ul > li > a:hover {
+	color: #FFFFFF;
+}
+
+a.facebook {
+	background-color: #30468D;
+	border-color: #FFFFFF;
+	margin-top: -5px;
+	float: right;
+}
