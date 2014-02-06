@@ -1,44 +1,40 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-12 col-sm-12">
+    <p id="notice"><%= notice %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-8 col-sm-12">
+    </div>
+    <p>
+      <strong>Name:</strong>
+      <%= @event.name %>
+    </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @event.name %>
-</p>
+    <p>
+      <strong>Description:</strong>
+      <%= @event.description %>
+    </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @event.description %>
-</p>
+    <p>
+      <strong>Host:</strong>
+      <%= link_to "#{@event.creator.name}", user_path(@event.creator) %>
+    </p>
 
-<p>
-  <strong>Latitude:</strong>
-  <%= @event.latitude %>
-</p>
+    <p>
+      <strong>Starts At:</strong>
+      <%= @event.start_time %>
+    </p>
 
-<p>
-  <strong>Longitude:</strong>
-  <%= @event.longitude %>
-</p>
+    <p>
+      <strong>Ends At:</strong>
+      <%= @event.end_time %>
+    </p>
+  </div>
+  <div class="col-lg-4 col-sm-12">
+    <%= render 'attendance_list' %>
+  </div>
+</div>
 
-<p>
-  <strong>Start time:</strong>
-  <%= @event.start_time %>
-</p>
-
-<p>
-  <strong>End time:</strong>
-  <%= @event.end_time %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @event.active %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @event.user_id %>
-</p>
-
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<%= link_to 'Edit', edit_event_path(@event), class: "btn btn-primary" %> |
+<%= link_to 'Back', events_path, class: "btn" %>
