@@ -6,6 +6,7 @@ class EventTest < ActiveSupport::TestCase
   should belong_to(:creator).class_name('User').with_foreign_key('user_id')
   should have_many(:attendances)
   should have_many(:users).through(:attendances)
+  should belong_to(:category)
 
   # validations
   should validate_presence_of(:name)
@@ -13,6 +14,7 @@ class EventTest < ActiveSupport::TestCase
   should validate_numericality_of(:user_id).only_integer
   should validate_numericality_of(:longitude)
   should validate_numericality_of(:latitude)
+  should validate_numericality_of(:category_id).only_integer
 
   # allow values...
   # longitude

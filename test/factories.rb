@@ -28,4 +28,10 @@ FactoryGirl.define do
 		association :event
 		confirmed false
 	end
+
+	# category factory
+	factory :category do
+		name "Hanging Out"
+		active true
+	end
 end
