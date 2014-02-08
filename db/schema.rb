@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207034627) do
+ActiveRecord::Schema.define(version: 20140208033416) do
 
   create_table "attendances", force: true do |t|
     t.integer  "user_id"
@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20140207034627) do
     t.text     "description"
     t.float    "latitude"
     t.float    "longitude"
-    t.time     "start_time"
-    t.time     "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.boolean  "active"
     t.integer  "user_id"
     t.datetime "created_at"
