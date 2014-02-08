@@ -26,9 +26,9 @@ class UserTest < ActiveSupport::TestCase
 		# set up the context
 		setup do
 			@alex = FactoryGirl.create(:user)
-			@ryan = FactoryGirl.create(:user, first_name: 'Ryan', oauth_expires_at: Time.new(2014, 1, 31, 12, 35))
+			@ryan = FactoryGirl.create(:user, first_name: 'Ryan', oauth_expires_at: DateTime.now - 1.day)
 			# I needed a name that comes before Egan, so I went with a high school classmate who also happens to have a first name of 4 characters
-			@mike = FactoryGirl.create(:user, first_name: 'Mike', last_name: 'Abate', oauth_expires_at: Time.new(2014, 2, 5, 11, 20))
+			@mike = FactoryGirl.create(:user, first_name: 'Mike', last_name: 'Abate', oauth_expires_at: DateTime.now + 2.weeks)
 		end
 		# tear down the context
 		teardown do

@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 	validates_numericality_of :longitude, allow_blank: true
 	validates_numericality_of :latitude, allow_blank: true
 	# the 2 seconds are for the delay that seems to be causing errors every now and again
-	validates_time :start_time, on_or_after: lambda { Date.current }, on: :create, allow_blank: false
+	validates_time :start_time, on_or_after: lambda { DateTime.now - 1.minute }, on: :create, allow_blank: false
 	validates_time :end_time, on_or_after: :start_time, allow_blank: true
 	validate :creator_in_system
 	validate :category_active_in_system
@@ -24,7 +24,7 @@ class Event < ActiveRecord::Base
 	scope :for_user, ->(uid) { where('user_id = ?', uid)  }
 	scope :by_start_time, -> { order('start_time ASC') }
 	scope :by_end_time, -> { order('end_time ASC') }
-	scope :current, -> { where('start_time <= ? AND (end_time IS NULL OR ? <= end_time )', Time.now, Time.now) }
+	scope :current, -> { where('start_time <= ? AND (end_time IS NULL OR ? <= end_time )', DateTime.now, DateTime.now) }
 	scope :active, -> { where(active: true) }
 	scope :inactive, -> { where(active: false) }
 
@@ -41,6 +41,7 @@ class Event < ActiveRecord::Base
 	end
 	# make sure category is active in the system
 	def category_active_in_system
+		return true if self.category_id.nil?
 		category_ids = Category.active.map { |category| category.id }
 		unless category_ids.include?(self.category_id)
 			errors.add(:category, ' is not active in the system')

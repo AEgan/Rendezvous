@@ -11,8 +11,8 @@ class User < ActiveRecord::Base
 
 	# scopes
 	scope :alphabetical, -> { order('last_name, first_name') }
-	scope :expired, -> { where('oauth_expires_at <= ?', Time.now) }
-	scope :active, -> { where('oauth_expires_at > ?', Time.now) }
+	scope :expired, -> { where('oauth_expires_at <= ?', DateTime.now) }
+	scope :active, -> { where('oauth_expires_at > ?', DateTime.now) }
 
 	# methods
 	# first last

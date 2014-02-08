@@ -34,7 +34,7 @@ class AttendanceTest < ActiveSupport::TestCase
 	  	@chilling = FactoryGirl.create(:category)
 	  	# need events
 	  	@bored_uc = FactoryGirl.create(:event, creator: @cory, category: @chilling)
-	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
+	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: DateTime.now + 20.minutes, end_time: DateTime.now + 3.hours)
 	  	# attendances
 	  	@dave_halo = FactoryGirl.create(:attendance, user: @dave, event: @halo, confirmed: false)
 	  	@tony_halo = FactoryGirl.create(:attendance, user: @tony, event: @halo, confirmed: true)
@@ -126,7 +126,7 @@ class AttendanceTest < ActiveSupport::TestCase
 		# user not in system would be caught with the shouldas above
 		# event not active
 		should "not allow an attendance to be created if the event is not active in the system" do
-			inactive_event = FactoryGirl.create(:event, creator: @cory, name: 'Inactive', description: 'Pls do not work', active: false)
+			inactive_event = FactoryGirl.create(:event, creator: @cory, category: @chilling, name: 'Inactive', description: 'Pls do not work', active: false)
 			bad_attendance = FactoryGirl.build(:attendance, user: @dave, event: inactive_event)
 			deny bad_attendance.valid?
 			inactive_event.destroy

@@ -7,7 +7,7 @@ FactoryGirl.define do
 		provider "facebook"
 		uid "1000000"
 		oauth_token "1930124vaowe29da9nfsak0"
-		oauth_expires_at Time.new(2014, 5, 5, 12, 30)
+		oauth_expires_at DateTime.now + 4.months
 	end
 
 	# event factory
@@ -16,8 +16,8 @@ FactoryGirl.define do
 		association :category
 		name "Bored in UC"
 		description "Come chill in the US with my I'm bored"
-		start_time Time.now
-		end_time Time.now + 1.hour
+		start_time DateTime.now
+		end_time DateTime.now + 1.hour
 		active true
 		latitude 40.444513
 		longitude -79.94234

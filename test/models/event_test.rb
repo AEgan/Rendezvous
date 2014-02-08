@@ -51,11 +51,11 @@ class EventTest < ActiveSupport::TestCase
 
   # start time
   # good
-  should allow_value(Time.now).for(:start_time)
-  should allow_value(Time.now + 1.minute).for(:start_time)
-  should allow_value(Time.now + 2.days).for(:start_time)
+  should allow_value(DateTime.now).for(:start_time)
+  should allow_value(DateTime.now + 1.minute).for(:start_time)
+  should allow_value(DateTime.now + 2.days).for(:start_time)
   # bad
-  should_not allow_value(Time.now - 1.minute).for(:start_time)
+  should_not allow_value(DateTime.now - 1.minute).for(:start_time)
   should_not allow_value(nil).for(:start_time)
   should_not allow_value("").for(:start_time)
 
@@ -74,9 +74,9 @@ class EventTest < ActiveSupport::TestCase
       @studying = FactoryGirl.create(:category, name: "Studying")
 	  	# events
 	  	@bored_uc = FactoryGirl.create(:event, creator: @cory, category: @chilling)
-	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
-	  	@inactive = FactoryGirl.create(:event, creator: @alex, category: @studying, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: Time.now + 7.hours, active: false)
-	  	@studying = FactoryGirl.create(:event, creator: @cory, category: @studying, name: "Studying", description: "Studying in Alex's Room", start_time: Time.now + 2.hours, end_time: nil)
+	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: DateTime.now + 20.minutes, end_time: DateTime.now + 3.hours)
+	  	@inactive = FactoryGirl.create(:event, creator: @alex, category: @studying, name: "Inactive", description: "Hacking", start_time: DateTime.now + 5.hours, end_time: DateTime.now + 7.hours, active: false)
+	  	@studying = FactoryGirl.create(:event, creator: @cory, category: @studying, name: "Studying", description: "Studying in Alex's Room", start_time: DateTime.now + 2.hours, end_time: nil)
   	end
   	# tear it down
   	teardown do
@@ -133,7 +133,7 @@ class EventTest < ActiveSupport::TestCase
   	# current
   	should "have a scope to return current events" do
   		# changing the start time to check if the end date was nil
-  		@studying.update_attribute(:start_time, Time.now - 1.hour)
+  		@studying.update_attribute(:start_time, DateTime.now - 1.hour)
   		@studying.save!
   		current_events = Event.current
   		assert current_events.include?(@bored_uc)
@@ -158,13 +158,13 @@ class EventTest < ActiveSupport::TestCase
   	# validations
   	# end time before start time
   	should "not allow end time to be before start time" do
-  		bad_dates = FactoryGirl.build(:event, creator: @alex, name: "Invalid", description: "This shouldn't be valid", start_time: Time.now+20.minutes, end_time: Time.now + 2.minutes)
+  		bad_dates = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "Invalid", description: "This shouldn't be valid", start_time: DateTime.now+20.minutes, end_time: DateTime.now + 2.minutes)
   		deny bad_dates.valid?
   	end
 
   	# creator not in the system
   	should "not allow an event to be created if the user is not in the system" do
-  		no_user = FactoryGirl.build(:event, creator: nil, name: "Invalid", description: "don't work")
+  		no_user = FactoryGirl.build(:event, creator: nil, category: @chilling, name: "Invalid", description: "don't work")
   		deny no_user.valid?
   		# don't really know how to test this with a user not in the system because the belongs_to is creator and there is no user_id...
   	end 
