@@ -4,7 +4,7 @@ class Category < ActiveRecord::Base
 
 	# validations
 	validates_presence_of :name
-	validates_uniquness_of :name, case_sensitive: false
+	validates_uniqueness_of :name, case_sensitive: false
 	validates_inclusion_of :active, in: [true, false]
 
 	# scopes

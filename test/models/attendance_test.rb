@@ -30,9 +30,11 @@ class AttendanceTest < ActiveSupport::TestCase
 	  	@cory = FactoryGirl.create(:user, first_name: "Cory", last_name: "Chang")
 	  	@dave = FactoryGirl.create(:user, first_name: "Dave", last_name: "Yan")
 	  	@tony = FactoryGirl.create(:user, first_name: "Tony", last_name: "Romo")
+	  	# need categories
+	  	@chilling = FactoryGirl.create(:category)
 	  	# need events
-	  	@bored_uc = FactoryGirl.create(:event, creator: @cory)
-	  	@halo = FactoryGirl.create(:event, creator: @alex, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
+	  	@bored_uc = FactoryGirl.create(:event, creator: @cory, category: @chilling)
+	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
 	  	# attendances
 	  	@dave_halo = FactoryGirl.create(:attendance, user: @dave, event: @halo, confirmed: false)
 	  	@tony_halo = FactoryGirl.create(:attendance, user: @tony, event: @halo, confirmed: true)
@@ -46,6 +48,8 @@ class AttendanceTest < ActiveSupport::TestCase
 			@cory.destroy
 			@dave.destroy
 			@tony.destroy
+			# categories
+			@chilling.destroy
 			# events
 			@bored_uc.destroy
 			@halo.destroy
@@ -63,6 +67,8 @@ class AttendanceTest < ActiveSupport::TestCase
 			assert_equal "Cory", @cory.first_name
 			assert_equal "Dave", @dave.first_name
 			assert_equal "Tony", @tony.first_name
+			# categories
+			assert_equal "Hanging Out", @chilling.name
 			# events
 			assert_equal "Bored in UC", @bored_uc.name
 			assert_equal "Playing Halo", @halo.name

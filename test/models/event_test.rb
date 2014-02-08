@@ -69,17 +69,23 @@ class EventTest < ActiveSupport::TestCase
 	  	# need users
 	  	@alex = FactoryGirl.create(:user)
 	  	@cory = FactoryGirl.create(:user, first_name: "Cory", last_name: "Chang")
+      # categories
+      @chilling = FactoryGirl.create(:category)
+      @studying = FactoryGirl.create(:category, name: "Studying")
 	  	# events
-	  	@bored_uc = FactoryGirl.create(:event, creator: @cory)
-	  	@halo = FactoryGirl.create(:event, creator: @alex, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
-	  	@inactive = FactoryGirl.create(:event, creator: @alex, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: Time.now + 7.hours, active: false)
-	  	@studying = FactoryGirl.create(:event, creator: @cory, name: "Studying", description: "Studying in Alex's Room", start_time: Time.now + 2.hours, end_time: nil)
+	  	@bored_uc = FactoryGirl.create(:event, creator: @cory, category: @chilling)
+	  	@halo = FactoryGirl.create(:event, creator: @alex, category: @chilling, name: "Playing Halo", description: "Playing halo in Varun's room", start_time: Time.now + 20.minutes, end_time: Time.now + 3.hours)
+	  	@inactive = FactoryGirl.create(:event, creator: @alex, category: @studying, name: "Inactive", description: "Hacking", start_time: Time.now + 5.hours, end_time: Time.now + 7.hours, active: false)
+	  	@studying = FactoryGirl.create(:event, creator: @cory, category: @studying, name: "Studying", description: "Studying in Alex's Room", start_time: Time.now + 2.hours, end_time: nil)
   	end
   	# tear it down
   	teardown do
   		# users
   		@alex.destroy
   		@cory.destroy
+      # categories
+      @chilling.destroy
+      @studying.destroy
   		# events
   		@bored_uc.destroy
   		@halo.destroy
@@ -88,8 +94,13 @@ class EventTest < ActiveSupport::TestCase
   	end
   	# make sure factories are working
   	should "have working factories for testing" do
+      # users
   		assert_equal @alex.first_name, "Alex"
   		assert_equal @cory.first_name, "Cory"
+      # categories
+      assert_equal @chilling.name, "Hanging Out"
+      assert_equal @studying.name, "Studying"
+      # events
   		assert_equal @bored_uc.name, "Bored in UC"
   		assert_equal @halo.name, "Playing Halo"
   		assert_equal @studying.name, "Studying"

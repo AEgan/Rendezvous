@@ -13,6 +13,7 @@ FactoryGirl.define do
 	# event factory
 	factory :event do
 		association :creator
+		association :category
 		name "Bored in UC"
 		description "Come chill in the US with my I'm bored"
 		start_time Time.now
