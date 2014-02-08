@@ -13,12 +13,15 @@ class Event < ActiveRecord::Base
 	validates_inclusion_of :active, in: [true, false], message: "Must be true or false"
 	validates_numericality_of :longitude, allow_blank: true
 	validates_numericality_of :latitude, allow_blank: true
-	# the 2 seconds are for the delay that seems to be causing errors every now and again
+	validates_presence_of :start_time
+	# do these even work?
 	validates_date :start_time, on_or_after: DateTime.now, on: :create, allow_blank: false
 	validates_date :end_time, on_or_after: :start_time, allow_blank: true
+	validates_date :start_time
 	validate :creator_in_system
 	validate :category_active_in_system
 	validate :start_time_before_end_time
+	validate :start_time_not_in_past, on: :create
 
 	# scopes
 	# can add more later
@@ -55,6 +58,15 @@ class Event < ActiveRecord::Base
 		return true if self.start_time.nil?
 		unless self.end_time.nil? or self.start_time < self.end_time
 			errors.add(:end_time, "must be before start time")
+			return false
+		end
+		true
+	end
+
+	def start_time_not_in_past
+		return true if self.start_time.nil?
+		unless self.start_time > DateTime.now - 2.seconds
+			errors.add(:start_time, "can not be in the past")
 			return false
 		end
 		true

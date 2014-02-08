@@ -15,6 +15,7 @@ class EventTest < ActiveSupport::TestCase
   should validate_numericality_of(:longitude)
   should validate_numericality_of(:latitude)
   should validate_numericality_of(:category_id).only_integer
+  should validate_presence_of(:start_time)
 
   # allow values...
   # longitude
@@ -168,6 +169,26 @@ class EventTest < ActiveSupport::TestCase
   		deny no_user.valid?
   		# don't really know how to test this with a user not in the system because the belongs_to is creator and there is no user_id...
   	end 
+
+    # bad values for start date
+    should "not allow values for start date that are blank, nil, or before the current time " do
+      late = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "L8", description: "start time in past", start_time: DateTime.now - 1.minute, end_time: DateTime.now + 1.hour)
+      deny late.valid?
+      blank = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "blank", description: "start time is blank", start_time: "", end_time: DateTime.now + 1.hour)
+      deny blank.valid?
+      is_nil = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "nil", description: "start time is nil", start_time: nil, end_time: DateTime.now + 1.hour)
+      deny is_nil.valid?
+      is_string = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "string", description: "start time is string", start_time: "string", end_time: DateTime.now + 1.hour)
+      deny is_string.valid?
+    end
+
+    # good values for start date
+    should "allow date values in the future or present for start date" do
+      current = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "Current", description: "start time is current", start_time: DateTime.now, end_time: DateTime.now + 5.hours)
+      assert current.valid?
+      future = FactoryGirl.build(:event, creator: @alex, category: @chilling, name: "Future", description: "start time is in the future", start_time: DateTime.now + 2.hours, end_time: DateTime.now + 5.hours)
+      assert future.valid?
+    end
 
   end
 end
