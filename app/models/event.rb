@@ -31,6 +31,7 @@ class Event < ActiveRecord::Base
 	scope :current, -> { where('start_time <= ? AND (end_time IS NULL OR ? <= end_time )', DateTime.now, DateTime.now) }
 	scope :active, -> { where(active: true) }
 	scope :inactive, -> { where(active: false) }
+	scope :for_category, ->(cid) { where('category_id = ?', cid) }
 
 	# methods
 	private

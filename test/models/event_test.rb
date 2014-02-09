@@ -156,6 +156,18 @@ class EventTest < ActiveSupport::TestCase
   		assert_equal [@inactive], Event.inactive
   	end
 
+    # for category
+    should "have a scope to return events that are associated with a given category" do
+      chilling_events = Event.for_category(@chilling.id)
+      studying_events = Event.for_category(@studying_cat.id)
+      assert_equal 2, chilling_events.size
+      assert_equal 2, studying_events.size
+      assert chilling_events.include?(@bored_uc)
+      assert chilling_events.include?(@halo)
+      assert studying_events.include?(@studying)
+      assert studying_events.include?(@inactive)
+    end
+
   	# validations
   	# end time before start time
   	should "not allow end time to be before start time" do
