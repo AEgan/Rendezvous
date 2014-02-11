@@ -25,7 +25,14 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
-
+    @event.user_id = current_user.id
+    st = @event.start_time
+    et = @event.end_time
+    newStartTime = DateTime.new(st.year, st.month, st.day, st.hour, st.min, st.sec, 'UTC')
+    newEndTime = DateTime.new(et.year, et.month, et.day, et.hour, et.min, et.sec, 'UTC')
+    @event.start_time = newStartTime
+    @event.end_time = newEndTime
+    @event.active = true
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -69,6 +76,6 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:name, :description, :latitude, :longitude, :start_time, :end_time, :active, :user_id)
+      params.require(:event).permit(:name, :description, :latitude, :longitude, :start_time, :end_time, :active, :user_id, :category_id)
     end
 end
