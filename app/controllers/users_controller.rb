@@ -10,6 +10,8 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    set_user
+    @created_events = Event.for_user(@user.id)
   end
 
   # GET /users/new

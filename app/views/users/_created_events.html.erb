@@ -1,1 +1,16 @@
-<b>Created Events will go here</b>
+<table>
+	<thead>
+		<th>Name</th>
+		<th>Category</th>
+		<th></th>
+	</thead>
+	<tbody>
+		<% @created_events.each do |event| %>
+			<tr>
+				<td><%= link_to "#{event.name}", event_path(event) %></td>
+				<td><%= "#{event.category.name}" %></td>
+				<td><%= link_to "Show", event_path(event), class: 'btn btn-secondary' %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
