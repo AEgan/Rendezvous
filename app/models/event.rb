@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
 	validates_numericality_of :latitude, allow_blank: true
 	validates_presence_of :start_time
 	# do these even work?
-	validates_date :start_time, on_or_after: DateTime.now, on: :create, allow_blank: false
+	validates_date :start_time, on_or_after: lambda { DateTime.now }, on: :create, allow_blank: false
 	validates_date :end_time, on_or_after: :start_time, allow_blank: true
 	validates_date :start_time
 	validate :creator_in_system

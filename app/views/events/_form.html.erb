@@ -20,6 +20,10 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
+    <%= f.label :category_id %><br>
+    <%= f.collection_select :category_id, Category.alphabetical, :id, :name, prompt: "Select Category..." %>
+  </div>
+  <div class="field">
     <%= f.label :latitude %><br>
     <%= f.text_field :latitude %>
   </div>
@@ -29,21 +33,13 @@
   </div>
   <div class="field">
     <%= f.label :start_time %><br>
-    <%= f.time_select :start_time %>
+    <%= f.datetime_select :start_time %>
   </div>
   <div class="field">
     <%= f.label :end_time %><br>
-    <%= f.time_select :end_time %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br>
-    <%= f.number_field :user_id %>
+    <%= f.datetime_select :end_time %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit nil, class: 'btn btn-success' %>
   </div>
 <% end %>
