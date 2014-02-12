@@ -1,4 +1,4 @@
-<table>
+<table class='table table-bordered table-striped table-hover'>
 	<thead>
 		<th>Name</th>
 		<th>Category</th>
@@ -9,7 +9,7 @@
 			<tr>
 				<td><%= link_to "#{event.name}", event_path(event) %></td>
 				<td><%= "#{event.category.name}" %></td>
-				<td><%= link_to "Show", event_path(event), class: 'btn btn-secondary' %></td>
+				<td><%= link_to "Show", event_path(event), class: 'btn btn-info' %></td>
 			</tr>
 		<% end %>
 	</tbody>

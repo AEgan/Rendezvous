@@ -4,6 +4,7 @@
 			<li><%= link_to "Rendezvous", :home, class: 'brand' %></li>
 			<% if current_user %>
 			<li><%= link_to "#{current_user.name}", user_path(current_user)%></li>
+			<li><%= link_to "Events", events_path %></li>
 			<li><%= link_to "Sign Out", :signout, class: 'btn facebook'%></li>
 			<% else %>
 			<li><%= link_to 'Sign in with facebook', "/auth/facebook", id: "sign_in", class: 'btn facebook' %></li>
