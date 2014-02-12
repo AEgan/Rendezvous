@@ -70,6 +70,7 @@ gem 'validates_timeliness'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'fb_graph'
 # Use unicorn as the app server
 # gem 'unicorn'
 
