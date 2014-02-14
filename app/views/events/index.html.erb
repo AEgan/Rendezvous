@@ -1,17 +1,12 @@
 <h1>Listing events</h1>
 
-<table>
+<table class="table table-bordered table-striped table-hover">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Description</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
       <th>Start time</th>
       <th>End time</th>
-      <th>Active</th>
-      <th>User</th>
-      <th></th>
+      <th>Host</th>
       <th></th>
       <th></th>
     </tr>
@@ -21,16 +16,15 @@
     <% @events.each do |event| %>
       <tr>
         <td><%= event.name %></td>
-        <td><%= event.description %></td>
-        <td><%= event.latitude %></td>
-        <td><%= event.longitude %></td>
         <td><%= event.start_time %></td>
         <td><%= event.end_time %></td>
-        <td><%= event.active %></td>
-        <td><%= event.user_id %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= event.creator.name %></td>
+        <td><%= link_to 'Show', event , class: "btn btn-primary btn-small" %></td>
+        <% if current_user && current_user.id == event.user_id %>
+          <td><%= link_to 'Edit', edit_event_path(event), class: "btn btn-default btn-small" %></td>
+        <% else %>
+          <td></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -38,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Event', new_event_path %>
+<%= link_to 'New Event', new_event_path, class: "btn btn-success" %>
