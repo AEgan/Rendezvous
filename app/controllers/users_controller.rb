@@ -11,8 +11,8 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     set_user
-    @created_events = Event.for_user(@user.id)
-    @attended_events = Attendance.for_user(@user.id).map { |a| a.event }
+    @created_events = Event.for_user(@user.id).by_start_time
+    @attended_events = Event.by_start_time.find(Attendance.for_user(@user.id).map { |a| a.event_id })
   end
 
   # GET /users/new
