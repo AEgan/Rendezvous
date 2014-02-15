@@ -1,4 +1,7 @@
-<br />
+<h2>Hosted Events</h2>
+<% if @created_events.empty? %>
+<b><%= "#{@user.name} has not created any events" %></b>
+<% else %>
 <table class='table table-bordered table-striped table-hover'>
 	<thead>
 		<th>Name</th>
@@ -15,3 +18,4 @@
 		<% end %>
 	</tbody>
 </table>
+<% end %>

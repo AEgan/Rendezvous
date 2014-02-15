@@ -1,1 +1,21 @@
-<b>Attended Events should go here</b>
+<h3>Attended Events</h3>
+<% if @attended_events.empty? %>
+	<b><%= "#{@user.name} has not attended any events"%></b>
+<% else%>
+	<tableclass='table table-bordered table-striped table-hover'>
+	<thead>
+		<th>Name</th>
+		<th>Category</th>
+		<th></th>
+	</thead>
+	<tbody>
+		<% @attended_events.each do |event| %>
+			<tr>
+				<td><%= link_to "#{event.name}", event_path(event) %></td>
+				<td><%= "#{event.category.name}" %></td>
+				<td><%= link_to "Show", event_path(event), class: 'btn btn-info' %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<% end%>

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
     set_user
     @created_events = Event.for_user(@user.id)
+    @attended_events = Attendance.for_user(@user.id).map { |a| a.event }
   end
 
   # GET /users/new
