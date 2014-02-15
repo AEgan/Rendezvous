@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
 	# gets the profile picture of the user
 	def profile_picture
-		FbGraph::User.me(self.oauth_token).fetch.picture
+		FbGraph::User.me(self.oauth_token).fetch.picture(width: 150, height: 200)
 	end
 
 	# black magic
