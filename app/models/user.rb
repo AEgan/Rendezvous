@@ -24,6 +24,12 @@ class User < ActiveRecord::Base
 	def ordered_name
 		"#{last_name}, #{first_name}"
 	end
+
+	# gets the profile picture of the user
+	def profile_picture
+		FbGraph::User.me(self.oauth_token).fetch.picture
+	end
+
 	# black magic
 	def self.from_omniauth(auth)
 		where(auth.slice(:provider, :uid)).first_or_initialize.tap do |user|
