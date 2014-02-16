@@ -22,12 +22,12 @@
 
     <p>
       <strong>Starts At:</strong>
-      <%= @event.start_time %>
+      <%= time_stringify(@event.start_time) %>
     </p>
 
     <p>
       <strong>Ends At:</strong>
-      <%= @event.end_time %>
+      <%= time_stringify(@event.end_time) %>
     </p>
   </div>
   <div class="col-lg-4 col-sm-12">
@@ -36,4 +36,4 @@
 </div>
 
 <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-primary" %> |
-<%= link_to 'Back', events_path, class: "btn" %>
+<%= link_to 'Back', events_path, class: "btn btn-default" %>
