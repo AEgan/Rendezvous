@@ -122,6 +122,11 @@ class AttendanceTest < ActiveSupport::TestCase
 			assert unconfirmed_attendances.include?(@dave_halo)
 		end
 
+		# by user
+		should "have a scope to order attendnaces by the users name" do
+			assert_equal ["Tony", "Tony", "Dave", "Dave"], Attendance.by_user.map { |att| att.user.first_name }
+		end
+
 		# validations
 		# user not in system would be caught with the shouldas above
 		# event not active

@@ -15,7 +15,7 @@ class Attendance < ActiveRecord::Base
 	scope :for_event, ->(eid) { where('event_id = ?', eid) }
 	scope :confirmed, -> { where(confirmed: true) }
 	scope :unconfirmed, -> { where(confirmed: false) }
-
+	scope :by_user, -> { joins(:user).order('last_name, first_name') }
 	# methods
 	private
 	# make sure user is in the system
