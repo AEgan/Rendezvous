@@ -5,7 +5,7 @@
 			<%= f.number_field :user_id, type: :hidden, value: current_user.id %>
 			<%= f.number_field :event_id, type: :hidden, value: @event.id %>
 			<%= f.hidden_field :confirmed, as: :hidden, value: false %>
-			<%= f.submit nil, class: 'btn btn-success' %>
+			<%= f.submit nil, class: 'btn btn-success', value: "Attend" %>
 		</div>
 	<% end %>
 <% end %>

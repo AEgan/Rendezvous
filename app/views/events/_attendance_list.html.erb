@@ -14,7 +14,11 @@
 					<% if current_user && attendance.user.id == current_user.id %>
 						<td>Some confirm button</td>
 					<% else %>
-						<td></td>
+						<% if attendance.confirmed %>
+							<td><span class='confirmed'>Confirmed</span></td>
+						<% else %>
+							<td><span class='unconfirmed'>Unconfirmed</span></td>
+						<% end %>
 					<% end %>
 				</tr>
 			<% end %>
