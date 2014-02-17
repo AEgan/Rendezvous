@@ -1,5 +1,4 @@
-<%# if(!current_user.nil? and current_user.id != @event.user_id) %>
-<% if(!current_user.nil?) %>
+<% if(!current_user.nil? and current_user.id != @event.user_id and Attendance.for_event(@event.id).for_user(current_user.id).empty? ) %>
 	<%= form_for(@attendance) do |f| %>
 		<br />
 		<div class="actions">
