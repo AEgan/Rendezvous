@@ -12,6 +12,7 @@ class EventsController < ApplicationController
   def show
     @event = set_event
     @attendances = Attendance.for_event(@event.id)
+    @attendance = Attendance.new
   end
 
   # GET /events/new
