@@ -1,0 +1,12 @@
+<%# if(!current_user.nil? and current_user.id != @event.user_id) %>
+<% if(!current_user.nil?) %>
+	<%= form_for(@attendance) do |f| %>
+		<br />
+		<div class="actions">
+			<%= f.number_field :user_id, type: :hidden, value: current_user.id %>
+			<%= f.number_field :event_id, type: :hidden, value: @event.id %>
+			<%= f.hidden_field :confirmed, as: :hidden, value: false %>
+			<%= f.submit nil, class: 'btn btn-success' %>
+		</div>
+	<% end %>
+<% end %>
