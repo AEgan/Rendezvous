@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     @event = set_event
-    @attendances = Attendance.for_event(@event.id)
+    @attendances = Attendance.for_event(@event.id).by_user
     @attendance = Attendance.new
   end
 
