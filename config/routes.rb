@@ -8,6 +8,8 @@ FuzzyOctoAdventure::Application.routes.draw do
   get "home/index", as: :home
   get "sessions/create"
   get "sessions/destroy"
+  get "search" => "home#search", as: :search
+  get "about" => 'home#about', as: :about
   resources :users
 
   match 'auth/:provider/callback', to: "sessions#create", via: [:get, :post]
